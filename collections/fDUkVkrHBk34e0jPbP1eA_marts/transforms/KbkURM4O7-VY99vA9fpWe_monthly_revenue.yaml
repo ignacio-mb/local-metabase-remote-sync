@@ -1,0 +1,46 @@
+collection_id: fDUkVkrHBk34e0jPbP1eA
+created_at: '2026-02-17T21:11:29.799376Z'
+creator_id: api-key-user-d5051eaf-adc6-46cc-b144-c255c829c472@api-key.invalid
+description: |-
+  Monthly revenue aggregation for reporting dashboards
+  Migrated from dbt model: model.shop_analytics.monthly_revenue
+  Source: models/marts/monthly_revenue.sql
+  Dependencies: fct_orders
+entity_id: KbkURM4O7-VY99vA9fpWe
+name: monthly_revenue
+owner_email: null
+owner_user_id: api-key-user-d5051eaf-adc6-46cc-b144-c255c829c472@api-key.invalid
+source:
+  query:
+    database: Analytics (dbt)
+    native:
+      query: |-
+        WITH orders AS (
+            SELECT * FROM transforms_marts.fct_orders
+            WHERE order_status = 'completed'
+        )
+
+        SELECT
+            DATE_TRUNC('month', order_date)::date AS month,
+            COUNT(order_id)                       AS total_orders,
+            COUNT(DISTINCT customer_id)           AS unique_customers,
+            SUM(order_total)                      AS gross_revenue,
+            SUM(amount_paid)                      AS collected_revenue,
+            AVG(order_total)                      AS avg_order_value,
+            SUM(total_quantity)                   AS items_sold
+        FROM orders
+        GROUP BY DATE_TRUNC('month', order_date)
+        ORDER BY month
+    type: native
+  type: query
+source_database_id: Analytics (dbt)
+tags: []
+target:
+  database: Analytics (dbt)
+  name: monthly_revenue
+  schema: transforms_marts
+  type: table
+serdes/meta:
+- id: KbkURM4O7-VY99vA9fpWe
+  label: monthly_revenue
+  model: Transform

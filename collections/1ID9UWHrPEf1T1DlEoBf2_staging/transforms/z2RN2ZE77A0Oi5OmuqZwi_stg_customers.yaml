@@ -1,0 +1,37 @@
+collection_id: 1ID9UWHrPEf1T1DlEoBf2
+created_at: '2026-02-17T21:11:29.46853Z'
+creator_id: api-key-user-d5051eaf-adc6-46cc-b144-c255c829c472@api-key.invalid
+description: |-
+  Cleaned customer data
+  Migrated from dbt model: model.shop_analytics.stg_customers
+  Source: models/staging/stg_customers.sql
+entity_id: z2RN2ZE77A0Oi5OmuqZwi
+name: stg_customers
+owner_email: null
+owner_user_id: api-key-user-d5051eaf-adc6-46cc-b144-c255c829c472@api-key.invalid
+source:
+  query:
+    database: Analytics (dbt)
+    native:
+      query: |-
+        SELECT
+            id          AS customer_id,
+            first_name,
+            last_name,
+            first_name || ' ' || last_name AS full_name,
+            email,
+            created_at
+        FROM raw.customers
+    type: native
+  type: query
+source_database_id: Analytics (dbt)
+tags: []
+target:
+  database: Analytics (dbt)
+  name: stg_customers
+  schema: transforms_staging
+  type: table
+serdes/meta:
+- id: z2RN2ZE77A0Oi5OmuqZwi
+  label: stg_customers
+  model: Transform
