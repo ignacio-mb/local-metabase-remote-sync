@@ -1,0 +1,37 @@
+collection_id: xB-S_vbv1zSsKcugO41xI
+created_at: '2026-02-17T14:57:42.774738Z'
+creator_id: api-key-user-23d69698-da3c-4199-9038-63bec16d81ef@api-key.invalid
+description: |-
+  Cleaned payment transactions
+  Migrated from dbt model: model.shop_analytics.stg_payments
+  Source: models/staging/stg_payments.sql
+entity_id: 1yJYEuIA6QMDwFeKttDGQ
+name: stg_payments
+owner_email: null
+owner_user_id: api-key-user-23d69698-da3c-4199-9038-63bec16d81ef@api-key.invalid
+source:
+  query:
+    database: Analytics (dbt)
+    native:
+      query: |-
+        SELECT
+            id          AS payment_id,
+            order_id,
+            amount,
+            method      AS payment_method,
+            status      AS payment_status,
+            created_at
+        FROM raw.payments
+    type: native
+  type: query
+source_database_id: Analytics (dbt)
+tags: []
+target:
+  database: Analytics (dbt)
+  name: stg_payments
+  schema: transforms_staging
+  type: table
+serdes/meta:
+- id: 1yJYEuIA6QMDwFeKttDGQ
+  label: stg_payments
+  model: Transform

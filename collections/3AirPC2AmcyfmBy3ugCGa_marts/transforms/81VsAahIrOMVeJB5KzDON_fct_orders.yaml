@@ -1,0 +1,70 @@
+collection_id: 3AirPC2AmcyfmBy3ugCGa
+created_at: '2026-02-17T14:57:43.762893Z'
+creator_id: api-key-user-23d69698-da3c-4199-9038-63bec16d81ef@api-key.invalid
+description: |-
+  Order fact table with item counts, totals, and payment info
+  Migrated from dbt model: model.shop_analytics.fct_orders
+  Source: models/marts/fct_orders.sql
+  Dependencies: stg_orders, stg_order_items, stg_payments
+entity_id: 81VsAahIrOMVeJB5KzDON
+name: fct_orders
+owner_email: null
+owner_user_id: api-key-user-23d69698-da3c-4199-9038-63bec16d81ef@api-key.invalid
+source:
+  query:
+    database: Analytics (dbt)
+    native:
+      query: |-
+        WITH orders AS (
+            SELECT * FROM transforms_staging.stg_orders
+        ),
+
+        order_items AS (
+            SELECT
+                order_id,
+                COUNT(*)           AS item_count,
+                SUM(quantity)      AS total_quantity,
+                SUM(line_total)    AS order_total
+            FROM transforms_staging.stg_order_items
+            GROUP BY order_id
+        ),
+
+        payments AS (
+            SELECT
+                order_id,
+                SUM(CASE WHEN payment_status = 'success' THEN amount ELSE 0 END) AS amount_paid,
+                COUNT(*)            AS payment_count,
+                MAX(payment_method) AS payment_method
+            FROM transforms_staging.stg_payments
+            GROUP BY order_id
+        )
+
+        SELECT
+            o.order_id,
+            o.customer_id,
+            o.order_status,
+            o.order_date,
+            oi.item_count,
+            oi.total_quantity,
+            oi.order_total,
+            COALESCE(p.amount_paid, 0)    AS amount_paid,
+            oi.order_total - COALESCE(p.amount_paid, 0) AS amount_outstanding,
+            p.payment_method,
+            o.created_at
+        FROM orders o
+        LEFT JOIN order_items oi ON o.order_id = oi.order_id
+        LEFT JOIN payments p     ON o.order_id = p.order_id
+        WHERE oi.order_total >= 10
+    type: native
+  type: query
+source_database_id: Analytics (dbt)
+tags: []
+target:
+  database: Analytics (dbt)
+  name: fct_orders
+  schema: transforms_marts
+  type: table
+serdes/meta:
+- id: 81VsAahIrOMVeJB5KzDON
+  label: fct_orders
+  model: Transform
