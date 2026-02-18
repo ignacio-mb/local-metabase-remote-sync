@@ -1,7 +1,7 @@
 name: Number of subscriptions
 description: Customers that signed up for our monthly subscription
 entity_id: qQ3JGGOxVC8mrOLwxpcR6
-created_at: '2026-02-17T21:05:18.59974Z'
+created_at: '2026-02-17T21:21:12.175902Z'
 creator_id: internal@metabase.com
 display: area
 archived: false

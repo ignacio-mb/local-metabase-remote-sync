@@ -1,7 +1,7 @@
 name: Orders according to sources per quarter
 description: Orders placed per quarter broken down by source and formatted to highlight best and worst quarters
 entity_id: km2d9-ZqHrlAM79yPh13G
-created_at: '2026-02-17T21:05:18.59974Z'
+created_at: '2026-02-17T21:21:12.175902Z'
 creator_id: internal@metabase.com
 display: pivot
 archived: false

@@ -1,7 +1,7 @@
 name: Orders by source per age group
 description: Shows a distribution of orders broken down by source across our customers' age groups
 entity_id: yBoV-iHmFUrY9xqB0v9Pg
-created_at: '2026-02-17T21:05:18.59974Z'
+created_at: '2026-02-17T21:21:12.175902Z'
 creator_id: internal@metabase.com
 display: bar
 archived: false

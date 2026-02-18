@@ -1,7 +1,7 @@
 name: Total order amount vs. discount given
 description: Analysis of discounts given vs. the size of the order
 entity_id: X8HNuB_i3j2uNFnsx3vQ0
-created_at: '2026-02-17T21:05:18.59974Z'
+created_at: '2026-02-17T21:21:12.175902Z'
 creator_id: internal@metabase.com
 display: scatter
 archived: false

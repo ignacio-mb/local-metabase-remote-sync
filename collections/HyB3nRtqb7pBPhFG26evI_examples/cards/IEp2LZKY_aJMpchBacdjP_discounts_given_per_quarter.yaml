@@ -1,7 +1,7 @@
 name: Discounts given per quarter
 description: Total amount of discounts last quarter compared to the previous
 entity_id: IEp2LZKY_aJMpchBacdjP
-created_at: '2026-02-17T21:05:18.59974Z'
+created_at: '2026-02-17T21:21:12.175902Z'
 creator_id: internal@metabase.com
 display: smartscalar
 archived: false

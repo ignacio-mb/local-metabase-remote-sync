@@ -1,0 +1,57 @@
+collection_id: TMaO9uya6-pXkqhT1ylQn
+created_at: '2026-02-18T12:02:51.270618Z'
+creator_id: api-key-user-9a385425-e591-4b84-b39f-6c4040997f61@api-key.invalid
+description: |-
+  Customer dimension with lifetime metrics and segmentation
+  Migrated from dbt model: model.shop_analytics.dim_customers
+  Source: models/marts/dim_customers.sql
+  Dependencies: stg_customers, fct_orders
+entity_id: fOFU6UITQa-k2aLQ6yyK1
+name: dim_customers
+owner_email: null
+owner_user_id: api-key-user-9a385425-e591-4b84-b39f-6c4040997f61@api-key.invalid
+source:
+  query:
+    database: Analytics (dbt)
+    native:
+      query: |-
+        WITH customers AS (
+            SELECT * FROM transforms_staging.stg_customers
+        ),
+
+        orders AS (
+            SELECT * FROM transforms_marts.fct_orders
+        )
+
+        SELECT
+            c.customer_id,
+            c.full_name,
+            c.email,
+            c.created_at                           AS customer_since,
+            COUNT(o.order_id)                      AS lifetime_orders,
+            COALESCE(SUM(o.order_total), 0)        AS lifetime_revenue,
+            COALESCE(AVG(o.order_total), 0)        AS avg_order_value,
+            MIN(o.order_date)                      AS first_order_date,
+            MAX(o.order_date)                      AS last_order_date,
+            CASE
+                WHEN COUNT(o.order_id) = 0 THEN 'inactive'
+                WHEN COUNT(o.order_id) = 1 THEN 'new'
+                WHEN COUNT(o.order_id) <= 3 THEN 'returning'
+                ELSE 'loyal'
+            END                                    AS customer_segment
+        FROM customers c
+        LEFT JOIN orders o ON c.customer_id = o.customer_id
+        GROUP BY c.customer_id, c.full_name, c.email, c.created_at
+    type: native
+  type: query
+source_database_id: Analytics (dbt)
+tags: []
+target:
+  database: Analytics (dbt)
+  name: dim_customers
+  schema: transforms_marts
+  type: table
+serdes/meta:
+- id: fOFU6UITQa-k2aLQ6yyK1
+  label: dim_customers
+  model: Transform

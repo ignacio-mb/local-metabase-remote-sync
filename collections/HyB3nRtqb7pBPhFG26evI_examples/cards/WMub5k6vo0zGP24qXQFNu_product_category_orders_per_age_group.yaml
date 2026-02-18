@@ -1,7 +1,7 @@
 name: Product category orders per age group
 description: Shows a distribution of orders broken down by product categories across our customers' age groups
 entity_id: WMub5k6vo0zGP24qXQFNu
-created_at: '2026-02-17T21:05:18.59974Z'
+created_at: '2026-02-17T21:21:12.175902Z'
 creator_id: internal@metabase.com
 display: bar
 archived: false

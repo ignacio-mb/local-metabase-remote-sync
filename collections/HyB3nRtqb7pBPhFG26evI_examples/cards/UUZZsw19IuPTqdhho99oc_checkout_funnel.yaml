@@ -1,7 +1,7 @@
 name: Checkout funnel
 description: Flow from viewing our website (empty) to checkout and subscribe
 entity_id: UUZZsw19IuPTqdhho99oc
-created_at: '2026-02-17T21:05:18.59974Z'
+created_at: '2026-02-17T21:21:12.175902Z'
 creator_id: internal@metabase.com
 display: funnel
 archived: false
